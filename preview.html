@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio Preview</title>
+    <title>Craftolio Preview</title>
     <link rel="stylesheet" href="/style.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
@@ -13,7 +13,7 @@
     class="text-white bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500 font-[Poppins]"
   >
     <!-- Wrapper -->
-    <div id="portfolio" class="">
+    <div id="portfolio">
       <!-- max-w-5xl mx-auto py-10 px-6 space-y-16 -->
       <!-- Header Section -->
 
@@ -102,9 +102,9 @@
       <!-- Projects Section -->
       <section class="m-8 p-6">
         <h2 class="text-2xl font-semibold text-center pb-2 mb-6">Projects</h2>
-        <div id="previewProjects" class="grid md:grid-cols-2 gap-6">
+        <div id="previewProjects" class="flex flex-wrap gap-6 justify-center">
           <div
-            class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
+            class="flex-1 min-w-[300px] border border-gray-200 rounded-lg p-4 hover:shadow-md transition"
           >
             <img
               src="https://img.icons8.com/ios-filled/100/image.png"
@@ -126,10 +126,15 @@
       <!-- Education Section -->
 
       <section class="m-8 p-6 text-center">
-        <h2 class="text-2xl font-semibold pb-2 mb-4">Education</h2>
-        <div class="flex items-center justify-between gap-4">
-          <div>
-            <h3 class="text-indigo-400 font-bold">Master of Technology</h4>
+        <h2 class="text-2xl font-semibold pb-2 mb-8">Education</h2>
+        <div
+          id="previewEducations"
+          class="flex flex-col md:flex-row justify-center gap-6 max-w-6xl mx-auto"
+        >
+          <div class="w-full sm:w-[45%] md:w-[30%]">
+            <h4 class="text-indigo-400 font-bold text-2xl">
+              Master of Technology
+            </h4>
             <p>
               I have completed my M.Tech from [Institute Name] with a CGPA of
               9.0. During my M.Tech, I worked on several academic and
@@ -137,16 +142,18 @@
               analytical skills.
             </p>
           </div>
-          <div>
-            <h4 class="text-indigo-400 font-bold">Bachelor of Technology</h4>
+          <div class="w-full sm:w-[45%] md:w-[30%]">
+            <h4 class="text-indigo-400 font-bold text-2xl">
+              Bachelor of Technology
+            </h4>
             <p>
               I have completed my B.Tech from [Institute Name] with a CGPA of
               8.0. My coursework and research focused on [your specialization,
               e.g., Artificial Intelligence and Machine Learning].
             </p>
           </div>
-          <div>
-            <h4 class="text-indigo-400">Class XIIth</h4>
+          <div class="w-full sm:w-[45%] md:w-[30%]">
+            <h4 class="text-indigo-400 font-bold text-2xl">Class XIIth</h4>
             <p>
               I have completed my class 12th from DPS. The program helped me
               develop a strong foundation in [key subjects or skills], which I
@@ -250,7 +257,7 @@
           >
             <p
               id="previewAbout"
-              class="text-gray-200 leading-relaxed text-center md:text-right max-w-md"
+              class="text-gray-200 leading-relaxed text-center md:text-center max-w-md"
             >
       ${
         data.about ||
@@ -286,7 +293,7 @@
 
         <section class="m-8 p-6 text-center">
           <h2 class="text-2xl font-semibold pb-2 mb-4">Education</h2>
-          <div class="flex items-center justify-between gap-4"></div>
+          <div id="previewEducations" class="flex flex-col md:flex-row items-center justify-between gap-4"></div>
         </section>
 
         <section class="m-8 p-6">
@@ -426,11 +433,34 @@
         }</p>
         ${
           p.link
-            ? `<a href="${p.link}" target="_blank" class="text-blue-600 text-sm hover:underline">View Project →</a>`
+            ? `<a href="${p.link}" target="_blank" class="text-pink-400 text-sm hover:underline">View Project →</a>`
             : ""
         }
       `;
             projectsContainer.appendChild(card);
+          });
+        }
+
+        // Educations
+        const educationsContainer =
+          document.getElementById("previewEducations");
+        if (educationsContainer && data.educations) {
+          educationsContainer.innerHTML = "";
+          data.educations.forEach((e) => {
+            const card = document.createElement("div");
+            switch (data.template) {
+              case "modern":
+                card.className = "w-full md:w-1/3";
+                break;
+              //add for classic and minimal as well
+            }
+            card.innerHTML = `
+        <h4 class="text-indigo-400 font-bold text-2xl">${
+          e.title || "Education Title"
+        }</h4>
+        <p>${e.description || "Education description."}</p>
+      `;
+            educationsContainer.appendChild(card);
           });
         }
 

@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileImageUpload = document.getElementById("profileImageUpload");
   const aboutInput = document.getElementById("aboutInput");
   const aboutImageUpload = document.getElementById("aboutImageUpload");
+  const phoneInput = document.getElementById("phoneInput");
   const emailInput = document.getElementById("emailInput");
   const linkedinInput = document.getElementById("linkedinInput");
   const githubInput = document.getElementById("githubInput");
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const skillsContainer = document.getElementById("skillsContainer");
   const addSkillBtn = document.getElementById("addSkillBtn");
   const projectsContainer = document.getElementById("projectsContainer");
+  const educationsContainer = document.getElementById("educationsContainer");
   const addProjectBtn = document.getElementById("addProjectBtn");
   const addEducationBtn = document.getElementById("addEducationBtn");
 
@@ -33,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutImage: "",
     skills: [],
     projects: [],
+    educations: [],
+    phone: "",
     email: "",
     linkedin: "",
     github: "",
@@ -60,6 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
     nameInput,
     taglineInput,
     aboutInput,
+    phoneInput,
     emailInput,
     linkedinInput,
     githubInput,
@@ -89,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
     portfolioData.tagline = taglineInput.value.trim();
     portfolioData.about = aboutInput.value.trim();
     portfolioData.profileImage = profileImageInput.value.trim();
+    portfolioData.phone = phoneInput.value.trim();
     portfolioData.email = emailInput.value.trim();
     portfolioData.linkedin = linkedinInput.value.trim();
     portfolioData.github = githubInput.value.trim();
@@ -226,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
     aboutInput.value = portfolioData.about;
     profileImageInput.value =
       portfolioData.profileImage.startsWith("data:") ? "" : portfolioData.profileImage;
+    phoneInput.value = portfolioData.phone;
     emailInput.value = portfolioData.email;
     linkedinInput.value = portfolioData.linkedin;
     githubInput.value = portfolioData.github;
@@ -236,6 +243,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     projectsContainer.innerHTML = "";
     (portfolioData.projects || []).forEach((p) => addProject(p));
+
+    educationsContainer.innerHTML = "";
+    (portfolioData.educations || []).forEach((e) => addEducation(e));
   }
 
   // --------------------------
@@ -351,26 +361,35 @@ document.addEventListener("DOMContentLoaded", () => {
   function generatePortfolioHTML(data) {
     const body = renderTemplate(data);
     const contact = `
-    <div class="flex flex-wrap gap-4 mt-10 justify-center">
-      ${data.email ? `<a href="mailto:${data.email}" class="text-gray-600 hover:text-blue-600">📧 Email</a>` : ""}
-      ${data.linkedin ? `<a href="${data.linkedin}" class="text-gray-600 hover:text-blue-600">💼 LinkedIn</a>` : ""}
-      ${data.github ? `<a href="${data.github}" class="text-gray-600 hover:text-blue-600">🐙 GitHub</a>` : ""}
+    <section class="m-8 p-6">
+    <h2 class="text-2xl font-semibold border-b border-gray-200 pb-2 mb-4">Contact</h2>
+    <div class="flex flex-wrap gap-4">
+      ${data.phone ? `<a href="tel:+91${data.phone}" class="text-shadow-pink-400 hover:text-pink-400 transition">📞 Phone</a>` : ""}
+      ${data.email ? `<a href="mailto:${data.email}" class="text-shadow-pink-400 hover:text-pink-400 transition">📧 Email</a>` : ""}
+      ${data.linkedin ? `<a href="${data.linkedin}" class="text-shadow-pink-400 hover:text-pink-400 transition">💼 LinkedIn</a>` : ""}
+      ${data.github ? `<a href="${data.github}" class="text-shadow-pink-400 hover:text-pink-400 transition">🐙 GitHub</a>` : ""}
     </div>`;
 
     return `
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>${data.name || "Portfolio"}</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-white text-gray-800 font-sans py-10 px-6">
-<main class="max-w-4xl mx-auto space-y-12">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Craftolio Preview</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body
+    class="text-white bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500 font-[Poppins]"
+  >
+    <!-- Wrapper -->
+    <div id="portfolio">
 ${body}
 ${contact}
-</main>
+</div>
 </body>
 </html>`;
   }
@@ -391,53 +410,85 @@ ${contact}
 
   function renderModernTemplate(data) {
     const skills = (data.skills || [])
-      .map((s) => `<span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">${s}</span>`)
+      .map((s) => `<li class="px-4 py-1 bg-white/10 text-gray-200 rounded-full text-sm font-medium hover:bg-white/20 transition">${s}</li>`)
       .join(" ");
     const projects = (data.projects || [])
       .map(
         (p) => `
-      <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
-        <img src="${p.image || "https://via.placeholder.com/400x200"}" class="rounded-md mb-3">
+      <div class="flex-1 min-w-[300px] border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+        <img src="${p.image || "https://img.icons8.com/ios-filled/100/image.png"}" class="rounded-md mb-3">
         <h3 class="font-semibold text-lg mb-1">${p.title || "Untitled"}</h3>
         <p class="text-gray-300 text-sm mb-2">${p.description || ""}</p>
+        <a href="${p.link}" target="_blank"
+              class="text-pink-400 text-sm hover:underline"
+              >View Project →</a>
       </div>`
       )
       .join("");
     const educations = (data.educations || [])
       .map(
         (e) => `
-      <div>
-        <h3 class="text-indigo-400 font-bold">${e.title || "Untitled"}</h3>
+      <div class="w-full sm:w-[45%] md:w-[30%]">
+        <h4 class="text-indigo-400 font-bold text-2xl">${e.title || "Untitled"}</h4>
         <p>${e.description || ""}</p>
       </div>`
       )
       .join("");
 
     return `
-    <header class="text-center space-y-4">
-      ${data.profileImage ? `<img src="${data.profileImage}" alt="Profile" class="w-32 h-32 rounded-full mx-auto object-cover border border-gray-300 shadow-sm">` : ""}
-      <h1 class="text-4xl font-bold">${data.name}</h1>
-      <p class="text-gray-600">${data.tagline}</p>
+    <!-- Header Section -->
+    <header class="h-screen flex items-center justify-center px-4">
+        <div class="flex flex-col md:flex-row items-center gap-8 md:gap-40">
+          <!-- Left Side: Image -->
+      ${data.profileImage ? `<img src="${data.profileImage}" alt="Profile" class="w-50 h-50 sm:w-80 sm:h-80 rounded-full">` : "images/person.jpg"}
+      <!-- Right Side: Text -->
+          <div
+            class="flex flex-col items-center text-center md:items-start md:text-left"
+          >
+      <h1 class="text-4xl md:text-5xl font-bold">${data.name}</h1>
+      <p class="text-lg md:text-xl text-gray-300">${data.tagline}</p>
+      </div>
+      </div>
     </header>
-    <section>
-      <h2 class="text-2xl font-semibold border-b pb-2 mb-4">About</h2>
-      <div class="flex flex-col md:flex-row items-center md:items-start gap-4">
-        ${data.aboutImage ? `<img src="${data.aboutImage}" alt="About Image" class="w-40 h-40 rounded-md object-cover border border-gray-300 shadow-sm">` : ""}
-        <p class="flex-1">${data.about}</p>
+
+    <!-- About Section -->
+    <section class="m-8 my-12 bg-gray-800/70 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-gray-700">
+      <h2 class="text-2xl font-semibold text-center pb-2 mb-4 text-gray-100">About Me</h2>
+      <div class="flex flex-col md:flex-row items-center relative p-6 md:p-10">
+      
+          <!-- Middle Line -->
+          <div
+            class="hidden md:block absolute left-1/2 top-0 h-full border-l border-gray-600"
+          ></div>
+          <!-- Left: Text -->
+          <div
+            class="w-full md:w-1/2 flex justify-center md:justify-end pr-0 md:pr-10 z-10"
+          >
+          <p class="text-gray-200 leading-relaxed text-center md:text-right max-w-md">${data.about}</p>
+          </div>
+          <!-- Right: Image -->
+          <div
+            class="w-full md:w-1/2 flex justify-center md:justify-center mt-8 md:mt-0 z-10"
+          >
+        ${data.aboutImage ? `<img src="${data.aboutImage}" alt="About Image" class="w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover">` : "images/person.jpg"}
+      </div>
       </div>
     </section>
 
-    <section class="m-8 p-6">
-      <h2 class="text-center text-2xl font-semibold pb-2 mb-4">Skills</h2>
-      <div class="flex flex-wrap gap-2">${skills}</div>
+    <!-- Skills Section -->
+      <section class="m-8 p-6">
+        <h2 class="text-center text-2xl font-semibold pb-2 mb-4">Skills</h2>
+      <ul class="flex flex-wrap gap-2">${skills}</ul>
     </section>
-    <section class="m-8 p-6">
-      <h2 class="text-2xl font-semibold text-center pb-2 mb-6">Projects</h2>
-      <div class="grid md:grid-cols-2 gap-6">${projects}</div>
+    <!-- Projects Section -->
+      <section class="m-8 p-6">
+        <h2 class="text-2xl font-semibold text-center pb-2 mb-6">Projects</h2>
+      <div class="flex flex-wrap gap-6 justify-center">${projects}</div>
     </section>
+    <!-- Education Section -->
     <section class="m-8 p-6 text-center">
       <h2 class="text-2xl font-semibold pb-2 mb-4">Education</h2>
-      <div class="flex items-center justify-between gap-4">${educations}</div>
+      <div class="flex flex-col md:flex-row justify-center gap-6 max-w-6xl mx-auto">${educations}</div>
     </section>
         `;
   }

@@ -316,48 +316,109 @@
             document.body.classList =
               "bg-linear-to-b from-neutral-50 to-neutral-400 font-[Outfit] text-gray-800";
             portfolio.innerHTML = `
-        <header class="flex flex-col sm:flex-row items-center sm:items-start gap-6 border-b pb-4 mb-6">
-          ${
-            data.profileImage
-              ? `<img src="${data.profileImage}" alt="Profile Image" class="w-32 h-32 rounded-md object-cover shadow">`
-              : ""
-          }
-          <div class="text-left">
-            <h1 id="previewName" class="text-3xl font-bold">${
-              data.name || "Your Name"
-            }</h1>
-            <p id="previewTagline" class="italic text-gray-500">${
-              data.tagline || "Your tagline or role"
-            }</p>
-          </div>
-        </header>
+        <!-- HEADER (Classic Centered Layout) -->
+<header class="py-20 px-6 bg-[#f8f5ef] border-b border-[#d6c9b1]">
+  <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
 
-        <section class="mb-6">
-          <h2 class="font-semibold text-lg mb-1">About</h2>
-          <p id="previewAbout">${
-            data.about || "Write something about yourself."
-          }</p>
-        </section>
+    <!-- Image -->
+    ${
+      data.profileImage
+        ? `<img src="${data.profileImage}" class="w-40 h-40 rounded-full border-4 border-[#d6c9b1] shadow-sm mb-6 object-cover" />`
+        : `images/person.jpg`
+    }
 
-        <section class="mb-6">
-          <h2 class="font-semibold text-lg mb-1">Skills</h2>
-          <ul id="previewSkills" class="list-disc ml-6"></ul>
-        </section>
+    <!-- Name -->
+    <h1 class="text-4xl font-serif font-bold text-[#4a3f35] tracking-wide">
+      ${data.name}
+    </h1>
 
-        <section class="mb-6">
-          <h2 class="font-semibold text-lg mb-1">Projects</h2>
-          <div id="previewProjects" class="space-y-4"></div>
-        </section>
+    <!-- Tagline -->
+    <p class="text-lg text-[#6d6458] mt-2 font-light italic">
+      ${data.tagline}
+    </p>
 
-        <section class="m-8 p-6">
-          <h2 class="text-2xl font-semibold border-b border-gray-200 pb-2 mb-4">Contact</h2>
-          <div id="previewContact" class="flex flex-wrap gap-4">
-            <a id="previewPhone" href="#" class="text-shadow-pink-400 hover:text-pink-400 transition" >📞 Phone</a>
-            <a id="previewEmail" href="#" class="text-shadow-pink-400 hover:text-pink-400 transition" >📧 Email</a>
-            <a id="previewLinkedin" href="#" class="text-shadow-pink-400 hover:text-pink-400 transition" >💼 LinkedIn</a>
-            <a id="previewGithub" href="#" class="text-shadow-pink-400 hover:text-pink-400 transition" >🐙 GitHub</a>
-          </div>
-        </section>
+  </div>
+</header>
+
+
+<!-- ABOUT SECTION (Classic Boxed Section) -->
+<section class="px-6 md:px-16 lg:px-28 py-14">
+  
+  <div class="bg-white border border-[#e0d8c8] rounded-xl p-10 shadow-sm max-w-4xl mx-auto">
+    <h2 class="text-3xl font-serif text-[#4a3f35] font-semibold mb-6 text-center">
+      About Me
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- About Text -->
+      <div class="md:col-span-2">
+        <p class="text-[#5a5045] leading-relaxed text-lg">
+          ${data.about}
+        </p>
+      </div>
+
+      <!-- About Image -->
+      <div class="flex justify-center">
+        ${
+          data.aboutImage
+            ? `<img src="${data.aboutImage}" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-[#d6c9b1] shadow-sm object-cover" />`
+            : `images/person.jpg`
+        }
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- SKILLS (Classic Centered Tags) -->
+<section class="px-6 md:px-16 lg:px-28 py-14 bg-[#fdfbf7] border-y border-[#e6dbc7]">
+  <h2 class="text-3xl font-serif text-[#4a3f35] font-semibold text-center mb-8">
+    Skills
+  </h2>
+
+  <ul id="previewSkills" class="flex flex-wrap justify-center gap-3"></ul>
+</section>
+
+
+<!-- PROJECTS (Classic Card Layout) -->
+<section class="px-6 md:px-16 lg:px-28 py-14">
+  <h2 class="text-3xl font-serif text-[#4a3f35] font-semibold mb-10 text-center">
+    Projects
+  </h2>
+
+  <div id="previewProjects" class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto"></div>
+</section>
+
+
+<!-- EDUCATION (Classic Timeline / Divider Style) -->
+<section class="px-6 md:px-16 lg:px-28 py-14 bg-[#faf7f2] border-y border-[#e0d8c8]">
+  <h2 class="text-3xl font-serif text-[#4a3f35] font-semibold mb-10 text-center">
+    Education
+  </h2>
+
+  <div id="previewEducations" class="space-y-8 max-w-3xl mx-auto relative">
+    <!-- JS cards go inside -->
+  </div>
+</section>
+
+
+<!-- CONTACT (Classic Simple Bottom Section) -->
+<section class="px-6 md:px-16 lg:px-28 py-14">
+  <h2 class="text-3xl font-serif text-[#4a3f35] border-b border-[#d6c9b1] pb-2 mb-6 text-center">
+    Contact
+  </h2>
+
+  <div id="previewContact" class="flex flex-wrap justify-center gap-6 text-lg">
+    <a id="previewPhone" class="text-[#4a3f35] hover:text-black transition">📞 Phone</a>
+    <a id="previewEmail" class="text-[#4a3f35] hover:text-black transition">📧 Email</a>
+    <a id="previewLinkedin" class="text-[#4a3f35] hover:text-black transition">💼 LinkedIn</a>
+    <a id="previewGithub" class="text-[#4a3f35] hover:text-black transition">🐙 GitHub</a>
+  </div>
+</section>
+
       `;
             break;
           }
@@ -589,13 +650,12 @@
                 break;
 
               case "classic":
-                card.className =
-                  "w-full sm:w-[45%] md:w-[30%] p-4 bg-white border border-neutral-200 rounded-xl shadow-sm";
+                card.className = "pl-6 border-l-2 border-[#d6c9b1]";
                 card.innerHTML = `
-                  <h4 class="font-semibold text-xl text-gray-800 mb-1">${
+                  <h4 class="font-serif text-xl font-semibold text-[#4a3f35]">${
                     e.title || "Education Title"
                   }</h4>
-                  <p class="text-gray-600 text-sm leading-relaxed">${
+                  <p class="text-[#6d6458] text-sm leading-relaxed">${
                     e.description || "Education description."
                   }</p>
                 `;

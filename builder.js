@@ -494,158 +494,280 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderClassicTemplate(data) {
-    const skills = (data.skills || []).map((s) => `<li class="list-disc ml-6">${s}</li>`).join("");
+    const skills = (data.skills || []).map((s) => `<li class="px-4 py-1 bg-[#e8e0d1] text-[#4a3f35] rounded-full text-sm font-medium border border-[#d6c9b1]">${s}</li>`).join("");
     const projects = (data.projects || [])
       .map(
         (p) => `
-      <div class="mb-4">
-        <h3 class="font-semibold">${p.title}</h3>
-        <p class="text-sm text-gray-600">${p.description}</p>
-      </div>`
+      <div class="p-6 bg-white border border-[#e0d8c8] rounded-xl shadow-sm hover:shadow-md transition">
+        <img src="${p.image || 'https://img.icons8.com/ios-filled/100/image.png'}" class="rounded-md mb-4 border border-[#d6c9b1]">
+        <h3 class="font-serif text-xl text-[#4a3f35] font-semibold mb-2">${p.title || "Untitled"}</h3>
+        <p class="text-[#6d6458] text-sm mb-3 leading-relaxed">${p.description || ""}</p>
+        <a href="${p.link}" target="_blank" class="text-[#8a775e] hover:underline">
+          View Project →
+        </a>
+      </div>
+      `
       )
       .join("");
-
-    return `
-    <header class="border-b pb-2 mb-6">
-      ${data.profileImage ? `<img src="${data.profileImage}" class="w-24 h-24 rounded-full object-cover border border-gray-300 shadow-sm mb-2">` : ""}
-      <h1 class="text-3xl font-bold">${data.name}</h1>
-      <p class="italic text-gray-500">${data.tagline}</p>
-    </header>
-    <section class="mb-6">
-      <h2 class="font-semibold text-lg">About</h2>
-      <p>${data.about}</p>
-    </section>
-    <section class="mb-6">
-      <h2 class="font-semibold text-lg">Skills</h2>
-      <ul>${skills}</ul>
-    </section>
-    <section class="mb-6">
-      <h2 class="font-semibold text-lg">Projects</h2>
-      ${projects}
-    </section>`;
-  }
-
-  function renderMinimalTemplate(data) {
-    const skills = (data.skills || [])
-      .map((s) => `<li class="px-4 py-1 bg-neutral-200 text-gray-700 rounded-full text-sm font-medium hover:bg-neutral-300 transition">${s}</li>`
-      ).join(" ");
-    const projects = (data.projects || []).map((p) =>
-      `
-        <div class="flex-1 min-w-[300px] border border-neutral-200 bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition">
-          <img src="${p.image || 'https://img.icons8.com/ios-filled/100/image.png'}" class="rounded-lg mb-4 w-full object-cover">
-          <h3 class="font-semibold text-lg text-gray-800 mb-2">${p.title || "Untitled"}</h3>
-          <p class="text-gray-600 text-sm mb-3 leading-relaxed">${p.description || ""}</p>
-          <a href="${p.link}" target="_blank" class="text-gray-700 text-sm font-medium hover:text-black underline-offset-2 hover:underline transition">
-            View Project →
-          </a>
+    const educations = (data.educations || [])
+      .map((e) => `
+      <div class="pl-6 border-l-2 border-[#d6c9b1]">
+          <h4 class="font-serif text-xl font-semibold text-[#4a3f35]">
+            ${e.title || "Untitled"}
+          </h4>
+          <p class="text-[#6d6458] text-sm leading-relaxed">
+            ${e.description || ""}
+          </p>
         </div>
-      `).join("");
-    const educations = (data.educations || []).map((e) =>
       `
-    <div class="w-full sm:w-[45%] md:w-[30%] p-4 bg-white border border-neutral-200 rounded-xl shadow-sm">
-      <h4 class="font-semibold text-xl text-gray-800 mb-1">
-        ${e.title || "Untitled"}
-      </h4>
-      <p class="text-gray-600 text-sm leading-relaxed">
-        ${e.description || ""}
-      </p>
-    </div>
-    `).join("");
+      ).join("");
+
     return `
-    <body class="bg-linear-to-b from-neutral-50 to-neutral-300 font-[Outfit] text-gray-800">
+    <body class="bg-[#f8f5ef] font-serif text-[#4a3f35]">
 
   <!-- Wrapper -->
   <div id="portfolio">
 
     <!-- HEADER -->
-    <header class="py-24 px-6 md:px-16 lg:px-28">
-      <div class="grid md:grid-cols-2 items-center gap-16">
+    <header class="py-20 px-6 border-b border-[#d6c9b1]">
+      <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
 
         <!-- Image -->
-        <div class="flex justify-center md:justify-start">
-          ${data.profileImage
-        ? `<img src="${data.profileImage}" class="w-48 h-48 md:w-64 md:h-64 rounded-3xl object-cover shadow-sm" />`
+        ${data.profileImage
+        ? `<img src="${data.profileImage}" class="w-40 h-40 rounded-full border-4 border-[#d6c9b1] shadow-sm mb-6 object-cover" />`
         : `images/person.jpg`
       }
-        </div>
 
-        <!-- Text -->
-        <div>
-          <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">
-            ${data.name}
-          </h1>
-          <p class="text-lg md:text-xl text-gray-600 mt-3">
-            ${data.tagline}
-          </p>
-        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-wide">
+          ${data.name}
+        </h1>
+
+        <p class="text-lg text-[#6d6458] mt-2 italic">
+          ${data.tagline}
+        </p>
 
       </div>
     </header>
 
 
     <!-- ABOUT SECTION -->
-    <section class="px-6 md:px-16 lg:px-28 py-16 bg-white rounded-3xl shadow-sm border border-neutral-200">
-      <h2 class="text-2xl font-semibold mb-8 tracking-tight text-center">About Me</h2>
+    <section class="px-6 md:px-16 lg:px-28 py-14">
+      <div class="bg-white border border-[#e0d8c8] rounded-xl p-10 shadow-sm max-w-4xl mx-auto">
 
-      <div class="grid md:grid-cols-3 gap-12">
+        <h2 class="text-3xl font-semibold mb-6 text-center">
+          About Me
+        </h2>
 
-        <!-- Text -->
-        <div class="md:col-span-2 flex justify-center md:justify-start">
-          <p class="text-gray-700 leading-relaxed max-w-xl text-center md:text-left">
-            ${data.about}
-          </p>
-        </div>
+        <div class="grid md:grid-cols-3 gap-10">
 
-        <!-- Image -->
-        <div class="flex justify-center md:justify-end">
-          ${data.aboutImage
-        ? `<img src="${data.aboutImage}" class="w-40 h-40 md:w-48 md:h-48 rounded-xl object-cover shadow-sm" />`
+          <!-- Text -->
+          <div class="md:col-span-2">
+            <p class="text-[#5a5045] leading-relaxed text-lg">
+              ${data.about}
+            </p>
+          </div>
+
+          <!-- Image -->
+          <div class="flex justify-center">
+            ${data.aboutImage
+        ? `<img src="${data.aboutImage}" class="w-36 h-36 md:w-44 md:h-44 rounded-lg border border-[#d6c9b1] shadow-sm object-cover" />`
         : `images/person.jpg`
       }
-        </div>
+          </div>
 
+        </div>
       </div>
     </section>
 
 
     <!-- SKILLS SECTION -->
-    <section class="px-6 md:px-16 lg:px-28 py-16">
-      <h2 class="text-2xl font-semibold mb-8 tracking-tight text-center">Skills</h2>
-      <ul class="flex flex-wrap gap-3 justify-center">${skills}</ul>
+    <section class="px-6 md:px-16 lg:px-28 py-14 bg-[#fdfbf7] border-y border-[#e6dbc7]">
+      <h2 class="text-3xl font-semibold text-center mb-8">
+        Skills
+      </h2>
+
+      <ul class="flex flex-wrap justify-center gap-3">
+        ${skills}
+      </ul>
     </section>
 
 
-    <!-- PROJECTS -->
-    <section class="px-6 md:px-16 lg:px-28 py-16">
-      <h2 class="text-2xl font-semibold mb-10 tracking-tight text-center">Projects</h2>
-      <div class="grid md:grid-cols-2 gap-10 justify-center">${projects}</div>
+    <!-- PROJECTS SECTION -->
+    <section class="px-6 md:px-16 lg:px-28 py-14">
+      <h2 class="text-3xl font-semibold mb-10 text-center">
+        Projects
+      </h2>
+
+      <div class="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+        ${projects}
+      </div>
     </section>
 
 
-    <!-- EDUCATION -->
-    <section class="px-6 md:px-16 lg:px-28 py-16">
-      <h2 class="text-2xl font-semibold mb-10 tracking-tight text-center">Education</h2>
+    <!-- EDUCATION SECTION -->
+    <section class="px-6 md:px-16 lg:px-28 py-14 bg-[#faf7f2] border-y border-[#e0d8c8]">
+      <h2 class="text-3xl font-semibold mb-10 text-center">
+        Education
+      </h2>
 
-      <div class="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">${educations}</div>
-      
+      <div id="previewEducations" class="space-y-8 max-w-3xl mx-auto">
+        ${educations}
+      </div>
     </section>
 
 
     <!-- CONTACT -->
-    <section class="px-6 md:px-16 lg:px-28 py-16">
-      <h2 class="text-2xl font-semibold border-b pb-2 mb-4 tracking-tight">Contact</h2>
+    <section class="px-6 md:px-16 lg:px-28 py-14">
+      <h2 class="text-3xl font-semibold border-b border-[#d6c9b1] pb-2 mb-6 text-center">
+        Contact
+      </h2>
 
-      <div class="flex flex-wrap gap-4">
-        ${data.phone ? `<a href="tel:+91${data.phone}" class="text-gray-700 hover:text-black transition">📞 Phone</a>` : ""}
-        ${data.email ? `<a href="mailto:${data.email}" class="text-gray-700 hover:text-black transition">📧 Email</a>` : ""}
-        ${data.linkedin ? `<a href="${data.linkedin}" class="text-gray-700 hover:text-black transition">💼 LinkedIn</a>` : ""}
-        ${data.github ? `<a href="${data.github}" class="text-gray-700 hover:text-black transition">🐙 GitHub</a>` : ""}
+      <div class="flex flex-wrap justify-center gap-6 text-lg">
+        ${data.phone
+        ? `<a href="tel:+91${data.phone}" class="text-[#4a3f35] hover:text-black transition">📞 Phone</a>`
+        : ""
+      }
+        ${data.email
+        ? `<a href="mailto:${data.email}" class="text-[#4a3f35] hover:text-black transition">📧 Email</a>`
+        : ""
+      }
+        ${data.linkedin
+        ? `<a href="${data.linkedin}" class="text-[#4a3f35] hover:text-black transition">💼 LinkedIn</a>`
+        : ""
+      }
+        ${data.github
+        ? `<a href="${data.github}" class="text-[#4a3f35] hover:text-black transition">🐙 GitHub</a>`
+        : ""
+      }
       </div>
     </section>
 
   </div>
 </body>
-`;
+`
+  }
+
+  function renderMinimalTemplate(data) {
+    const skills = (data.skills || [])
+      .map((s) => `< li class="px-4 py-1 bg-neutral-200 text-gray-700 rounded-full text-sm font-medium hover:bg-neutral-300 transition" > ${s}</li > `
+      ).join(" ");
+    const projects = (data.projects || []).map((p) =>
+      `
+      < div class="flex-1 min-w-[300px] border border-neutral-200 bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition" >
+        <img src="${p.image || 'https://img.icons8.com/ios-filled/100/image.png'}" class="rounded-lg mb-4 w-full object-cover">
+          <h3 class="font-semibold text-lg text-gray-800 mb-2">${p.title || "Untitled"}</h3>
+          <p class="text-gray-600 text-sm mb-3 leading-relaxed">${p.description || ""}</p>
+          <a href="${p.link}" target="_blank" class="text-gray-700 text-sm font-medium hover:text-black underline-offset-2 hover:underline transition">
+            View Project →
+          </a>
+        </div>
+    `).join("");
+    const educations = (data.educations || []).map((e) =>
+      `
+      < div class="w-full sm:w-[45%] md:w-[30%] p-4 bg-white border border-neutral-200 rounded-xl shadow-sm" >
+      <h4 class="font-semibold text-xl text-gray-800 mb-1">
+        ${e.title || "Untitled"}
+      </h4>
+      <p class="text-gray-600 text-sm leading-relaxed">
+        ${e.description || ""}
+      </p>
+    </div >
+      `).join("");
+    return `
+      < body class="bg-linear-to-b from-neutral-50 to-neutral-300 font-[Outfit] text-gray-800" >
+
+  < !--Wrapper -->
+      <div id="portfolio">
+
+        <!-- HEADER -->
+        <header class="py-24 px-6 md:px-16 lg:px-28">
+          <div class="grid md:grid-cols-2 items-center gap-16">
+
+            <!-- Image -->
+            <div class="flex justify-center md:justify-start">
+              ${data.profileImage
+        ? `<img src="${data.profileImage}" class="w-48 h-48 md:w-64 md:h-64 rounded-3xl object-cover shadow-sm" />`
+        : `images/person.jpg`
+      }
+            </div>
+
+            <!-- Text -->
+            <div>
+              <h1 class="text-4xl md:text-5xl font-semibold tracking-tight">
+                ${data.name}
+              </h1>
+              <p class="text-lg md:text-xl text-gray-600 mt-3">
+                ${data.tagline}
+              </p>
+            </div>
+
+          </div>
+        </header>
+
+
+        <!-- ABOUT SECTION -->
+        <section class="px-6 md:px-16 lg:px-28 py-16 bg-white rounded-3xl shadow-sm border border-neutral-200">
+          <h2 class="text-2xl font-semibold mb-8 tracking-tight text-center">About Me</h2>
+
+          <div class="grid md:grid-cols-3 gap-12">
+
+            <!-- Text -->
+            <div class="md:col-span-2 flex justify-center md:justify-start">
+              <p class="text-gray-700 leading-relaxed max-w-xl text-center md:text-left">
+                ${data.about}
+              </p>
+            </div>
+
+            <!-- Image -->
+            <div class="flex justify-center md:justify-end">
+              ${data.aboutImage
+        ? `<img src="${data.aboutImage}" class="w-40 h-40 md:w-48 md:h-48 rounded-xl object-cover shadow-sm" />`
+        : `images/person.jpg`
+      }
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- SKILLS SECTION -->
+        <section class="px-6 md:px-16 lg:px-28 py-16">
+          <h2 class="text-2xl font-semibold mb-8 tracking-tight text-center">Skills</h2>
+          <ul class="flex flex-wrap gap-3 justify-center">${skills}</ul>
+        </section>
+
+
+        <!-- PROJECTS -->
+        <section class="px-6 md:px-16 lg:px-28 py-16">
+          <h2 class="text-2xl font-semibold mb-10 tracking-tight text-center">Projects</h2>
+          <div class="grid md:grid-cols-2 gap-10 justify-center">${projects}</div>
+        </section>
+
+
+        <!-- EDUCATION -->
+        <section class="px-6 md:px-16 lg:px-28 py-16">
+          <h2 class="text-2xl font-semibold mb-10 tracking-tight text-center">Education</h2>
+
+          <div class="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">${educations}</div>
+
+        </section>
+
+
+        <!-- CONTACT -->
+        <section class="px-6 md:px-16 lg:px-28 py-16">
+          <h2 class="text-2xl font-semibold border-b pb-2 mb-4 tracking-tight">Contact</h2>
+
+          <div class="flex flex-wrap gap-4">
+            ${data.phone ? `<a href="tel:+91${data.phone}" class="text-gray-700 hover:text-black transition">📞 Phone</a>` : ""}
+            ${data.email ? `<a href="mailto:${data.email}" class="text-gray-700 hover:text-black transition">📧 Email</a>` : ""}
+            ${data.linkedin ? `<a href="${data.linkedin}" class="text-gray-700 hover:text-black transition">💼 LinkedIn</a>` : ""}
+            ${data.github ? `<a href="${data.github}" class="text-gray-700 hover:text-black transition">🐙 GitHub</a>` : ""}
+          </div>
+        </section>
+
+      </div>
+</body >
+      `;
     // const projects = (data.projects || [])
     //   .map(
     //     (p) => `

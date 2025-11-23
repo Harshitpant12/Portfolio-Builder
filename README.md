@@ -26,7 +26,7 @@ No backend, no account, no data stored — everything happens in your browser.
 
 ## Screenshots
 
-![Home](./images/home.png)
+![Home](./images/home_hero.png)
 ![Home-2](./images/home-2.png)
 ![About](./images/about.png)
 ![Modern Template](./images/modern.png)

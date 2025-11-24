@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const educationsContainer = document.getElementById("educationsContainer");
   const addProjectBtn = document.getElementById("addProjectBtn");
   const addEducationBtn = document.getElementById("addEducationBtn");
+  const resetBtn = document.getElementById("resetBtn");
 
   let portfolioData = {
     name: "",
@@ -67,6 +68,32 @@ document.addEventListener("DOMContentLoaded", () => {
   addSkillBtn.addEventListener("click", () => addSkill());
   addProjectBtn.addEventListener("click", () => addProject());
   addEducationBtn.addEventListener("click", () => addEducation());
+  resetBtn.addEventListener("click", () => resetAllFields());
+
+  function resetAllFields() {
+    if (confirm("Are you sure you want to reset all fields?")) {
+      portfolioData = {
+        name: "",
+        tagline: "",
+        about: "",
+        profileImage: "",
+        aboutImage: "",
+        skills: [],
+        projects: [],
+        educations: [],
+        phone: "",
+        email: "",
+        linkedin: "",
+        github: "",
+        template: "modern",
+      };
+      restoreForm();
+      saveToLocalStorage();
+      sendToPreview();
+      window.location.reload();
+    }
+  }
+
   document.querySelectorAll(".exportBtn").forEach(btn =>
     btn.addEventListener("click", handleExport)
   );
